@@ -8,7 +8,7 @@ const App = () => {
 
   // search input handler
   const searchForBook = (event,searchValue) => {
-		event.preventDefault();
+		event.preventDefault(); // stop page from refreshing
     setSearchValue(searchValue); // set state
 	}
 
