@@ -19,7 +19,7 @@ const BookList = (props) => {
 	const buildBookObject = (bookInfo) => {
 		return {
 			title: bookInfo.volumeInfo.title,
-			author: bookInfo.volumeInfo.authors[0]
+			author: bookInfo.volumeInfo.authors
 		}
 	}
 
@@ -62,7 +62,7 @@ const BookList = (props) => {
 		)
 	} else { // at this point we have valid data to display, so display it
 
-		const bookArray = books.map((book,index) => <Book index={index} book={book} /> );
+		const bookArray = books.map((book,index) => <Book key={index} book={book} /> );
 
 		return (
 			<div className="bookList">
