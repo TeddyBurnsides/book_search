@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Book from './Book';
 
 const BookList = (props) => {
 
@@ -15,6 +16,13 @@ const BookList = (props) => {
 		return data;
 	}
 
+	const buildBookObject = (bookInfo) => {
+		return {
+			title: bookInfo.volumeInfo.title,
+			author: bookInfo.volumeInfo.authors[0]
+		}
+	}
+
 	useEffect(() => {
 
 		if (props.searchValue !== '') {
@@ -28,12 +36,12 @@ const BookList = (props) => {
 					setError(true); // notify user we're in an error state
 				} else {
 					setError(false); // reset error state if it's been set previously
-					// add data from response into our book array
+					// add data from response into our array of book objects
 					for (var i = 0; i < response.items.length; i++) {
-						let newTitle = response.items[i].volumeInfo.title;
-						newBooks.push(newTitle);
+						newBooks.push(buildBookObject(response.items[i]));
 					}
 					setBooks(newBooks); // set state with newly acquired book data
+					//console.log(addNewBook('theo'))
 					setLoading(false); // we've finished loading data
 				}
 			});
@@ -54,7 +62,7 @@ const BookList = (props) => {
 		)
 	} else { // at this point we have valid data to display, so display it
 
-		const bookArray = books.map((title,index) => <li key={index}>{title}</li>);
+		const bookArray = books.map((book,index) => <Book index={index} book={book} /> );
 
 		return (
 			<div className="bookList">
