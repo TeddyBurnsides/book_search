@@ -17,9 +17,12 @@ const BookList = (props) => {
 	}
 
 	const buildBookObject = (bookInfo) => {
+		console.log(bookInfo.volumeInfo)
 		return {
-			title: bookInfo.volumeInfo.title,
-			author: bookInfo.volumeInfo.authors
+			title: bookInfo.volumeInfo?.title,
+			author: bookInfo.volumeInfo?.authors.join(', '),
+			imageUrl: bookInfo.volumeInfo.imageLinks?.smallThumbnail,
+			infoUrl: bookInfo.volumeInfo?.infoLink
 		}
 	}
 
