@@ -3,6 +3,7 @@ import Book from './Book';
 
 const BookList = (props) => {
 
+	// state values
 	const [error, setError] = useState(false); // search error has occured
 	const [hasInitSearch,setHasInitSearch] = useState(false); // user has kicked off a search already
 	const [loading,setLoading] = useState(false); // results are loading
