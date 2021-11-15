@@ -45,6 +45,8 @@ table {
 body {
 	padding:50px;
 	font-family:'Helvetica Neue';
+	max-width:500px;
+	margin: 0 auto;
 }
 form {
 	display:flex;
@@ -67,11 +69,12 @@ input[type="text"]:focus {
 button {
 	background:#1666ce;
 	width:auto;
-	height:38px;
+	height:37px;
 	color:#fff;
 	margin:0 0 0 10px;
 	border:0;
 	cursor:pointer;
+	border-bottom:1px solid rgba(0,0,0,.3);
 }
 button:hover {
 	background:#176bda;

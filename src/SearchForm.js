@@ -15,7 +15,7 @@ const SearchForm = (props) => {
 			<input 
 				type="text" 
 				value={searchValue}
-				placeholder="Enter a search"
+				placeholder="Search books..."
 				onChange={event => setSearchValue(event.target.value)}
 			/>
 			<button onClick={(event) => searchForBook(event,searchValue)}>Search</button>

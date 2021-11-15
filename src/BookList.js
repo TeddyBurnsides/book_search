@@ -8,7 +8,7 @@ const BookList = (props) => {
 	const [loading,setLoading] = useState(false); // results are loading
 	const [books, setBooks] = useState([]); // contains data returned from API
 
-	
+	// fetch the google books API
 	const getBooks = async () => {
 		const url = 'https://www.googleapis.com/books/v1/volumes?q=' + props.searchValue;
 		let response = await fetch(url)
@@ -16,6 +16,7 @@ const BookList = (props) => {
 		return data;
 	}
 
+	// given the book's API response, build an object with the relevant info
 	const buildBookObject = (bookInfo) => {
 		console.log(bookInfo.volumeInfo)
 		return {
