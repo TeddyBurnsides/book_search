@@ -10,11 +10,27 @@ const BookList = (props) => {
 	const [books, setBooks] = useState([]); // contains data returned from API
 
 	// fetch the google books API
-	const getBooks = async () => {
-		const url = 'https://www.googleapis.com/books/v1/volumes?q=' + props.searchValue;
-		let response = await fetch(url)
+	const getBooks = async (searchValue, searchType) => {
+		const url = buildUrl(searchValue, searchType);
+		console.log(url)
+		let response = await fetch(url);
 		let data = await response.json();
 		return data;
+	}
+
+	const buildUrl = (searchValue, searchType) => {
+
+		if (searchValue === undefined) return null; // can't search for nothing (should be stopped before this point, but safety check!)
+		if (searchType === undefined) searchType = 'keyword'; // default search type to keyword
+
+		searchValue=searchValue.replaceAll(' ','+'); // API wants pluses not spaces
+		
+		let url='https://www.googleapis.com/books/v1/volumes?q='
+		if (searchType === 'keyword') url=url + searchValue;
+		if (searchType === 'title') url=url + 'intitle:' + searchValue;
+		if (searchType === 'author') url=url + 'inauthor:' + searchValue;
+
+		return url;
 	}
 
 	// given the book's API response, build an object with the relevant info
@@ -37,7 +53,7 @@ const BookList = (props) => {
 			setHasInitSearch(true); // we have started a search
 
 			let newBooks = [];
-			getBooks().then(response => {
+			getBooks(props.searchValue, props.searchType).then(response => {
 				if (response?.items === undefined) { // need a valid response to continue
 					setError(true); // notify user we're in an error state
 				} else {
@@ -52,7 +68,7 @@ const BookList = (props) => {
 				}
 			});
 		}	
-	},[props.searchValue]); // want component to re-render when a new search value is entered
+	},[props.searchValue, props.searchType]); // want component to re-render when a new search value is entered
 
 	if (error) { // set when fetch fails to return any data
 		return (
