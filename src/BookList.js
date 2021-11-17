@@ -8,17 +8,18 @@ const BookList = (props) => {
 	const [hasInitSearch,setHasInitSearch] = useState(false); // user has kicked off a search already
 	const [loading,setLoading] = useState(false); // results are loading
 	const [books, setBooks] = useState([]); // contains data returned from API
+	const [numOfResults, setNumOfResults] = useState(0);
+	const [previousState, setPreviousState] = useState({searchValue:props.searchValue,searchType:props.searchType});
 
 	// fetch the google books API
-	const getBooks = async (searchValue, searchType) => {
-		const url = buildUrl(searchValue, searchType);
-		console.log(url)
+	const getBooks = async (searchValue, searchType, pageNumber) => {
+		const url = buildUrl(searchValue, searchType, pageNumber);
 		let response = await fetch(url);
 		let data = await response.json();
 		return data;
 	}
 
-	const buildUrl = (searchValue, searchType) => {
+	const buildUrl = (searchValue, searchType, pageNumber) => {
 
 		if (searchValue === undefined) return null; // can't search for nothing (should be stopped before this point, but safety check!)
 		if (searchType === undefined) searchType = 'keyword'; // default search type to keyword
@@ -29,6 +30,12 @@ const BookList = (props) => {
 		if (searchType === 'keyword') url=url + searchValue;
 		if (searchType === 'title') url=url + 'intitle:' + searchValue;
 		if (searchType === 'author') url=url + 'inauthor:' + searchValue;
+
+		const resultsPerPage=5;
+		url=url+'&maxResults='+resultsPerPage;
+		
+		const index=(pageNumber-1)*resultsPerPage;
+		if (pageNumber > 0) url=url+'&startIndex='+index;
 
 		return url;
 	}
@@ -45,15 +52,29 @@ const BookList = (props) => {
 		return {title:title, author:authors, imageUrl:imageUrl, infoUrl:infoUrl}
 	}
 
+	const loadMoreResults = (event) => {
+		props.searchForBook(event)
+	}
+
 	useEffect(() => {
 
 		if (props.searchValue !== '') {
 
-			setLoading(true); // results are likely loading
-			setHasInitSearch(true); // we have started a search
+			
+			//setBooks([]); // clear screen of current book list
 
-			let newBooks = [];
-			getBooks(props.searchValue, props.searchType).then(response => {
+			let newBooks = books
+			if (props.searchValue !== previousState.searchValue || props.searchType !== previousState.searchType) {
+				newBooks=[];
+				setBooks(newBooks);
+				setPreviousState({searchValue:props.searchValue, searchType:props.searchType})
+				props.resetPageNumber();
+			}
+
+			setLoading(true); // flag that results are likely loading
+			setHasInitSearch(true); // flag that we have started a search
+
+			getBooks(props.searchValue, props.searchType, props.pageNumber).then(response => {
 				if (response?.items === undefined) { // need a valid response to continue
 					setError(true); // notify user we're in an error state
 				} else {
@@ -63,24 +84,44 @@ const BookList = (props) => {
 						newBooks.push(buildBookObject(response.items[i]));
 					}
 					setBooks(newBooks); // set state with newly acquired book data
+					setNumOfResults(numOfResults+response.items.length);
 					//console.log(addNewBook('theo'))
 					setLoading(false); // we've finished loading data
 				}
 			});
 		}	
-	},[props.searchValue, props.searchType]); // want component to re-render when a new search value is entered
+	},[props.searchValue, props.searchType, props.pageNumber]); // want component to re-render when a new search value is entered
 
 	if (error) { // set when fetch fails to return any data
 		return (
-			<p className="message">No results found</p>
+			<div className="bookList">
+				<h2>Books Found:</h2>
+				<p className="message">No results found</p>
+			</div>
 		)
-	} else if (loading) { // set between when a non-zero length search term is entered, and results are set into state
-		return (
-			<p className="message">Loading...</p>
-		)
+	} else if (loading && props.pageNumber > 0) { // set between when a non-zero length search term is entered, and results are set into state
+		if (props.searchValue !== previousState.searchValue || props.searchType !== previousState.searchType) {
+			return (
+				<div className="bookList">
+					<h2>Books Found:</h2>
+					<p className="message">Loading...</p>
+				</div>
+			)
+		} else {
+			const bookArray = books.map((book,index) => <Book key={index} book={book} /> );
+			return (
+				<div className="bookList">
+					<h2>Books Found:</h2>
+					<ul>{bookArray}</ul>
+					<p className="message">Loading...</p>
+				</div>
+			)
+		}
 	} else if (hasInitSearch === false) { // if we haven't attempted a search yet, don't display anything
 		return (
-			<p className="message"></p>
+			<div className="bookList">
+				<p className="message"></p>
+			</div>
 		)
 	} else { // at this point we have valid data to display, so display it
 
@@ -90,6 +131,7 @@ const BookList = (props) => {
 			<div className="bookList">
 				<h2>Books Found:</h2>
 				<ul>{bookArray}</ul>
+				<div onClick={(event) => loadMoreResults(event)} className="moreResults">Load More</div>
 			</div>
 			
 		)

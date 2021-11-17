@@ -4,13 +4,14 @@ const Book = (props) => {
 	const authorString = (props.book.author === '') ? '[no author]' : 'by ' + props.book.author;
 	return (
 		<li key={props.index}>
-			<div className="coverImage">
+			<a rel="noreferrer" target="_blank" href={props.book.infoUrl} className="coverImage">
 				<img alt='Book Cover' src={props.book.imageUrl} />
-			</div>
+			</a>
 			<div className="content">
-				<h3><a href={props.book.infoUrl}>{props.book.title}</a></h3>
+				<h3><a rel="noreferrer" target="_blank" href={props.book.infoUrl}>{props.book.title}</a></h3>
 				<h4>{authorString}</h4>
 			</div>
+			<a rel="noreferrer" target="_blank" href={props.book.infoUrl} className="link">View</a>
 		</li>
 	)
 }
