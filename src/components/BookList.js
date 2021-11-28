@@ -1,18 +1,10 @@
 // components
 import Book from './Book';
-import MoreResultsButton from './MoreResultsButton';
 
 const BookList = (props) => {
 	
-	// if books API returns no results or bad data
-	if (props.state.error) { 
-		
-		return (
-			<p className="message">Unable to find any books</p>
-		);
-
 	// if no search has been started yet
-	} else if (props.searchCriteria.value === undefined) { 
+	if (props.searchCriteria.value === undefined) { 
 		
 		return (null);
 
@@ -21,25 +13,27 @@ const BookList = (props) => {
 	
 		const bookArray = props.books.map((book,index) => <Book key={index} book={book} /> );
 		return (
-			<>
-				<ul>{bookArray}</ul>
-				<MoreResultsButton getBooks={props.getBooks} />
-			</>
+			<ul>{bookArray}</ul>
 		);
 
-	} else if (props.state.loading) {
-
-		return (
-			<p>SOS</p>
-		)
-
 	// else we're loading results
-	} else { 
+	} else if (props.state.loading) { 
 		
 		return (
 			<p className="message">Loading...</p>
 		);
 	
+	// something bad happened - error out
+	} else if (props.state.error) {
+	
+		return (
+			<p className="message">Sorry, we weren't able to find any books with that criteria. :(</p>
+		);
+	// unknown state
+	} else {
+
+		return (null);
+		
 	}
 	
 }

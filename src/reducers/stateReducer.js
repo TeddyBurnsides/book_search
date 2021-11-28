@@ -9,7 +9,7 @@ const stateReducer = (prevState,action) => {
 	  case 'loadingResults':
 	    return {...prevState, loading:true, error: false};
 	  case 'finishedLoadingResults':
-	    return {...prevState, loading: false};
+	    return {...prevState, loading: false, error: false};
 	  default:
 	    throw new Error();
 	}

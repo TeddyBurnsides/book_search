@@ -7,6 +7,7 @@ import lodash from "lodash";
 //components
 import BookList from './BookList';
 import SearchForm from './SearchForm';
+import MoreResultsButton from './MoreResultsButton';
 
 // reducers
 import bookReducer from '../reducers/bookReducer';
@@ -49,26 +50,24 @@ const App = () => {
         setPrevSearchCriteria({...searchCriteria})
 			}
 
+      stateDispatch({type:'loadingResults'});
+
 			fetchBookData(searchCriteria, state.page).then(response => {
 
         // if a valid response came back
 				if (response?.items === undefined) { 
 
-					stateDispatch({type:'error'});
+					stateDispatch({type:'error'}); // something went wrong
 
 				} else {
-
-					stateDispatch({type:'loadingResults'});
 					
 					// add data from response into our array of book objects
 					for (var i = 0; i < response.items.length; i++) {
 						bookDispatch({type:'addBook',book:buildBookObject(response.items[i])});
 					}
-					
-          stateDispatch({type:'finishedLoadingResults'});
-
+				
 				}
-			});
+			}).then(() => stateDispatch({type:'finishedLoadingResults'})); // wait for async function before ending loading state
 		}	
 	},[searchCriteria.value, searchCriteria.type, state.page]); // component re-render when new search or a new page is wanted
 
@@ -85,6 +84,7 @@ const App = () => {
           books={books}
           getBooks={getBooks}
         />
+        {books.length > 0 && <MoreResultsButton loading={state.loading} getBooks={getBooks} />}
       </div>
     </div>
   );
