@@ -56,9 +56,9 @@ table {
 /* App-specific styles */
 
 body {
-	padding:50px;
+	padding:20px;
 	font-family:var(--fontFamily);
-	min-width:500px;
+	min-width:330px;
 	max-width:1000px;
 	margin: 0 auto;
 }
