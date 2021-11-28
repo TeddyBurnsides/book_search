@@ -5,12 +5,6 @@ const SearchForm = (props) => {
 	const [searchValue,setSearchValue] = useState(''); // search value from input field
 	const [searchType, setSearchType] = useState('keyword'); // search type from dropdown
 
-	// wrapper for search function in App.js. This allows for easy local state adjustments
-	const searchForBook = (event,searchValue,searchType) => {
-		// setSearchValue(''); // clear input field after performing search
-		props.searchForBook(event,searchValue,searchType); // call to main function in App.js
-	}
-
 	return (
 		<form>
 			<input 
@@ -24,10 +18,9 @@ const SearchForm = (props) => {
 				<option value="title">Title</option>
 				<option value="author">Author</option>
 			</select>
-			<button onClick={(event) => searchForBook(event,searchValue,searchType)}>Search</button>
+			<button onClick={(event) => props.getBooks(event,true,searchValue,searchType)}>Search</button>
 		</form>
 	)
-
 }
 
 export default SearchForm;
