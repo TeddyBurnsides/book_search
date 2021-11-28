@@ -2,8 +2,11 @@
 
 const MoreResultsButton = (props) => {
 
+	const buttonText = props.state.loading ? 'Loading...' : 'Load More';
+	const buttonClass = props.state.loading ? 'moreResults disabled' : 'moreResults';
+
 	return (
-		<div onClick={(event) => props.getBooks(event,false)} className="moreResults">{props.loading ? 'Loading...' : 'Load More'}</div>
+		<div onClick={(event) => props.getBooks(event,false)} className={buttonClass}>{buttonText}</div>
 	)
 	
 }

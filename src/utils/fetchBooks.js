@@ -26,7 +26,7 @@ const buildUrl = (searchValue, searchType, pageNumber) => {
 	if (searchType === 'title') url=url + 'intitle:' + searchValue;
 	if (searchType === 'author') url=url + 'inauthor:' + searchValue;
  
-	const resultsPerPage=2;
+	const resultsPerPage=4;
 	url=url+'&maxResults='+resultsPerPage;
 	
 	const index=(pageNumber-1)*resultsPerPage;

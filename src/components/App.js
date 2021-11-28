@@ -26,12 +26,12 @@ const App = () => {
   const [books, bookDispatch] = useReducer(bookReducer,[]); 
 
   // search input handler
-  const getBooks = (event,clearPrevResults,searchValue,searchType) => {
+  const getBooks = (event,newSearch,searchValue,searchType) => {
   
     event.preventDefault(); // avoid a page refresh
 
     // handle new search criteria vs. getting more books for the current search
-    if (clearPrevResults) {
+    if (newSearch) {
       stateDispatch({type:'newSearch'});
       setSearchCriteria(prevState => ({...prevState, value:searchValue, type: searchType}));
     } else {
@@ -73,20 +73,19 @@ const App = () => {
 
 
   return (
-    <div>
-      <SearchForm getBooks={getBooks} />
+    <>
+      <SearchForm state={state} getBooks={getBooks} />
       <div className="bookList">
         {state.page>=1 && <h2>Books Found:</h2>}
         <BookList 
           state={state}
           searchCriteria={searchCriteria}
-          prevSearchCriteria={prevSearchCriteria}
           books={books}
           getBooks={getBooks}
         />
-        {books.length > 0 && <MoreResultsButton loading={state.loading} getBooks={getBooks} />}
+        {books.length > 0 && <MoreResultsButton state={state} getBooks={getBooks} />}
       </div>
-    </div>
+    </>
   );
 }
 

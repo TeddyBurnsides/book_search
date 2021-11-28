@@ -59,11 +59,15 @@ body {
 	padding:20px;
 	font-family:var(--fontFamily);
 	min-width:330px;
-	max-width:1000px;
+	max-width:700px;
 	margin: 0 auto;
 }
 form {
 	display:flex;
+	transition:.4s padding ease;
+}
+form.frontAndCenter {
+	padding: 10% 0 0 0;
 }
 input[type="text"],button {
 	border-radius:4px;
@@ -118,9 +122,9 @@ button:hover {
 }
 p.message {
 	font-style:italic;
-	color:#777;
+	color:#888;
 	text-align:Center;
-	padding:30px 0;
+	padding:50px 0;
 }
 h2 {
 	font-size:16pt;
@@ -206,9 +210,14 @@ a.link:hover {
 	padding: 10px 0;
 	border-radius: 4px;
 	color: #777;
+	border:1px solid #ddd;
 	cursor:pointer;
 }
 .moreResults:hover {
 	background:#e3e3e3;
-	color:#666;
+	color:#555;
+	border-color:#ccc;
+}
+.moreResults.disabled { /* applied when in loading state */
+	pointer-events:none;
 }

@@ -6,7 +6,9 @@ const BookList = (props) => {
 	// if no search has been started yet
 	if (props.searchCriteria.value === undefined) { 
 		
-		return (null);
+		return (
+			<p className="message">What will you read today?</p>
+		);
 
 	// books have been found
 	} else if (props.books.length > 0) {

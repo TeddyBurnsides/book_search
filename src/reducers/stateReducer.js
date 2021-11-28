@@ -7,9 +7,9 @@ const stateReducer = (prevState,action) => {
 	  case 'getMoreResults':
 	    return {...prevState, page:prevState.page+1}
 	  case 'loadingResults':
-	    return {...prevState, loading:true, error: false};
+	    return {...prevState, loading:true};
 	  case 'finishedLoadingResults':
-	    return {...prevState, loading: false, error: false};
+	    return {...prevState, loading: false};
 	  default:
 	    throw new Error();
 	}

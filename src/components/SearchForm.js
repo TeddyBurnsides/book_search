@@ -6,9 +6,11 @@ const SearchForm = (props) => {
 	const [searchValue,setSearchValue] = useState(''); // free text search field
 	const [searchType, setSearchType] = useState('keyword'); // option drop down box
 
+	const formClass = props.state.hasInitSearch ? '' : 'frontAndCenter';
+
 	return (
 
-		<form>
+		<form className={formClass}>
 			<input 
 				type="text" 
 				value={searchValue}
