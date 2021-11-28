@@ -67,7 +67,7 @@ form {
 	transition:.4s padding ease;
 }
 form.frontAndCenter {
-	padding: 10% 0 0 0;
+	padding: 20% 0 0 0;
 }
 input[type="text"],button {
 	border-radius:4px;

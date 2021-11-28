@@ -30,6 +30,8 @@ const App = () => {
   
     event.preventDefault(); // avoid a page refresh
 
+    if (searchValue === "") return;
+
     // handle new search criteria vs. getting more books for the current search
     if (newSearch) {
       stateDispatch({type:'newSearch'});
@@ -50,7 +52,7 @@ const App = () => {
         setPrevSearchCriteria({...searchCriteria})
 			}
 
-      stateDispatch({type:'loadingResults'});
+      stateDispatch({type:'loadingResults'}); // starting loading before async fetch happens
 
 			fetchBookData(searchCriteria, state.page).then(response => {
 
