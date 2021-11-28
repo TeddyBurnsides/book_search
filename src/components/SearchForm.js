@@ -1,11 +1,13 @@
+// core
 import { useState } from "react";
 
 const SearchForm = (props) => {
 
-	const [searchValue,setSearchValue] = useState(''); // search value from input field
-	const [searchType, setSearchType] = useState('keyword'); // search type from dropdown
+	const [searchValue,setSearchValue] = useState(''); // free text search field
+	const [searchType, setSearchType] = useState('keyword'); // option drop down box
 
 	return (
+
 		<form>
 			<input 
 				type="text" 
@@ -20,7 +22,8 @@ const SearchForm = (props) => {
 			</select>
 			<button onClick={(event) => props.getBooks(event,true,searchValue,searchType)}>Search</button>
 		</form>
-	)
+		
+	);
 }
 
 export default SearchForm;

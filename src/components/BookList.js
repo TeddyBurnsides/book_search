@@ -1,10 +1,11 @@
+// components
 import Book from './Book';
 import MoreResultsButton from './MoreResultsButton';
 
 const BookList = (props) => {
 	
 	// if books API returns no results or bad data
-	if (props.appState.error) { 
+	if (props.state.error) { 
 		
 		return (
 			<p className="message">Unable to find any books</p>
@@ -25,6 +26,12 @@ const BookList = (props) => {
 				<MoreResultsButton getBooks={props.getBooks} />
 			</>
 		);
+
+	} else if (props.state.loading) {
+
+		return (
+			<p>SOS</p>
+		)
 
 	// else we're loading results
 	} else { 
