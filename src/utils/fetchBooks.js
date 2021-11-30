@@ -9,6 +9,8 @@ const fetchBookData = async (searchCriteria, pageNumber) => {
 	const url = buildUrl(searchValue, searchType, pageNumber);
 	let response = await fetch(url);
 	let data = await response.json();
+
+	console.log(data);
  
 	return data;
 }

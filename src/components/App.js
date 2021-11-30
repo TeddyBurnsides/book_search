@@ -1,13 +1,12 @@
-// core
+import React from 'react';
 import { useEffect, useReducer, useState } from "react";
-
-// libraries
+import {useNavigate, Routes, Route } from 'react-router-dom';
 import lodash from "lodash";
 
 //components
 import BookList from './BookList';
 import SearchForm from './SearchForm';
-import MoreResultsButton from './MoreResultsButton';
+import BookPage from './BookPage';
 
 // reducers
 import bookReducer from '../reducers/bookReducer';
@@ -25,6 +24,8 @@ const App = () => {
   const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0})
   const [books, bookDispatch] = useReducer(bookReducer,[]); 
 
+  const navigate = useNavigate();
+
   // search input handler
   const getBooks = (event,newSearch,searchValue,searchType) => {
   
@@ -35,16 +36,20 @@ const App = () => {
     // handle new search criteria vs. getting more books for the current search
     if (newSearch) {
       stateDispatch({type:'newSearch'});
-      setSearchCriteria(prevState => ({...prevState, value:searchValue, type: searchType}));
+      setSearchCriteria(prevState => ({...prevState, value:searchValue, type: searchType}));    
     } else {
       stateDispatch({type:'getMoreResults'});
     }
+
+    navigate('/'); // takes you back to the search results page
     
   }
 
 	useEffect(() => {
 
 		if (searchCriteria.value) {
+
+      
 
       // if search criteria changed, clear page for new results
 			if (!lodash.isEqual(prevSearchCriteria,searchCriteria)) { 
@@ -64,8 +69,11 @@ const App = () => {
 				} else {
 					
 					// add data from response into our array of book objects
-					for (var i = 0; i < response.items.length; i++) {
-						bookDispatch({type:'addBook',book:buildBookObject(response.items[i])});
+					for (var index = 0; index < response.items.length; index++) {
+						bookDispatch({
+              type:'addBook',
+              book:buildBookObject(response.items[index])
+            });
 					}
 				
 				}
@@ -73,19 +81,27 @@ const App = () => {
 		}	
 	},[searchCriteria.value, searchCriteria.type, state.page]); // component re-render when new search or a new page is wanted
 
-
   return (
     <>
       <SearchForm state={state} getBooks={getBooks} />
       <div className="bookList">
-        {state.page>=1 && <h2>Books Found:</h2>}
-        <BookList 
-          state={state}
-          searchCriteria={searchCriteria}
-          books={books}
-          getBooks={getBooks}
-        />
-        {books.length > 0 && <MoreResultsButton state={state} getBooks={getBooks} />}
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <BookList
+                state={state}
+                searchCriteria={searchCriteria}
+                books={books}
+                getBooks={getBooks}
+              />
+            }
+          />
+          <Route 
+            path="book/:id"
+            element={<BookPage state={state} books={books} />}
+          />
+        </Routes>
       </div>
     </>
   );
