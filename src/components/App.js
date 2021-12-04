@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useReducer, useState } from "react";
-import {useNavigate, Routes, Route } from 'react-router-dom';
 import lodash from "lodash";
 
 //components
@@ -24,8 +23,6 @@ const App = () => {
   const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0})
   const [books, bookDispatch] = useReducer(bookReducer,[]); 
 
-  const navigate = useNavigate();
-
   // search input handler
   const getBooks = (event,newSearch,searchValue,searchType) => {
   
@@ -40,8 +37,6 @@ const App = () => {
     } else {
       stateDispatch({type:'getMoreResults'});
     }
-
-    navigate('/'); // takes you back to the search results page
     
   }
 
@@ -85,23 +80,12 @@ const App = () => {
     <>
       <SearchForm state={state} getBooks={getBooks} />
       <div className="bookList">
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              <BookList
-                state={state}
-                searchCriteria={searchCriteria}
-                books={books}
-                getBooks={getBooks}
-              />
-            }
-          />
-          <Route 
-            path="book/:id"
-            element={<BookPage state={state} books={books} />}
-          />
-        </Routes>
+        <BookList
+          state={state}
+          searchCriteria={searchCriteria}
+          books={books}
+          getBooks={getBooks}
+        />          
       </div>
     </>
   );

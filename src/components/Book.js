@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Book = (props) => {
 
 	// handle null inputs
+	const bookId = props.book.id
 	const authors = (props.book.authors === '') ? '[no author]' : 'by ' + props.book.authors;
 	const titles = (props.book.title === '') ? '[no title]' : props.book.title;
 
@@ -16,7 +16,7 @@ const Book = (props) => {
 				<h3>{titles}</h3>
 				<h4>{authors}</h4>
 			</div>
-			<Link to={'/book/' + props.index} className="link">View</Link> 
+			
 			
 		</li>
 	);
