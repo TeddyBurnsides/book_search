@@ -1,5 +1,4 @@
 import React from 'react';
-import {useParams, Link} from 'react-router-dom';
 
 const BookPage = (props) => {
 
@@ -11,14 +10,8 @@ const BookPage = (props) => {
 
 		return data;
 	}
-
 	
-	const {id} = useParams();
 	const book = props?.books[props.index];
-
-	console.log(book);
-	console.log(id)
-	console.log(props.books);
 
 	if (book !== undefined) {
 		// handle null inputs
@@ -29,7 +22,7 @@ const BookPage = (props) => {
 		return (
 			<>
 				<h2>
-					<Link className="navLink" to="/">&larr; Search Results</Link>
+					<button className="navLink" to="/">&larr; Search Results</button>
 					<span className="spacer">/</span>
 					<span className="active">{title}</span>
 				</h2>
