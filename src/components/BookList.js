@@ -15,7 +15,7 @@ const BookList = (props) => {
 	// books have been found
 	} else if (props.books.length > 0) {
 	
-		const bookArray = props.books.map((book,index) => <Book key={index} index={index} book={book} /> );
+		const bookArray = props.books.map((book,index) => <Book key={index} index={index} book={book} showBookDetails={props.showBookDetails} /> );
 		return (
 			<>
 				{props.state.page>=1 && <h2>Search Results</h2>}

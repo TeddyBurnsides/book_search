@@ -20,7 +20,7 @@ const App = () => {
 
   const [searchCriteria, setSearchCriteria] = useState({value:undefined, type: undefined});
   const [prevSearchCriteria, setPrevSearchCriteria] = useState({});
-  const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0})
+  const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0, openBook:null})
   const [books, bookDispatch] = useReducer(bookReducer,[]); 
 
   // search input handler
@@ -38,6 +38,23 @@ const App = () => {
       stateDispatch({type:'getMoreResults'});
     }
     
+  }
+
+  const showBookDetails = (event, bookId) => {
+
+    event.preventDefault();
+
+    stateDispatch({
+      type: 'showBookDetails',
+      bookId: bookId
+    });
+  }
+
+  const hideBookDetails = (event) => {
+
+    event.preventDefault();
+
+    stateDispatch({type: 'hideBookDetails'});
   }
 
 	useEffect(() => {
@@ -74,19 +91,21 @@ const App = () => {
 				}
 			}).then(() => stateDispatch({type:'finishedLoadingResults'})); // wait for async function before ending loading state
 		}	
-	},[searchCriteria.value, searchCriteria.type, state.page]); // component re-render when new search or a new page is wanted
+	},[searchCriteria, state.page]); // component re-render when new search or a new page is wanted
 
   return (
     <>
       <SearchForm state={state} getBooks={getBooks} />
       <div className="bookList">
-        <BookList
+        {state.openBook === null && <BookList
           state={state}
           searchCriteria={searchCriteria}
           books={books}
           getBooks={getBooks}
-        />          
+          showBookDetails={showBookDetails}
+        />}
       </div>
+      {state.openBook !== null && <BookPage books={books} index={state.openBook} hideBookDetails={hideBookDetails} />}   
     </>
   );
 }

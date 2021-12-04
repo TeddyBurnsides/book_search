@@ -10,6 +10,11 @@ const buildBookObject = (bookInfo) => {
 		imageUrl: book?.imageLinks?.smallThumbnail,
 		infoUrl: book?.infoLink,
 		subtitle: book?.subtitle,
+		pageCount: book?.pageCount,
+		description: book?.description,
+		publishedDate: book?.publishedDate,
+		publisher: book?.publisher,
+		categories: book?.categories,
 	});
 }
 

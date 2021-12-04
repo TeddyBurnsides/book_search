@@ -51,6 +51,8 @@ table {
 	--fontFamily: 'Helvetica Neue',Helvetica, Arial, sans-serif;
 	--blue: #1666ce;
 	--lighterBlue: #176bda;
+	--lightestBlue: #61a1f4;
+	--evenLighterBlue:rgb(155, 194, 245);
 }
 
 /* App-specific styles */
@@ -61,6 +63,7 @@ body {
 	min-width:330px;
 	max-width:700px;
 	margin: 0 auto;
+	position:relative;
 }
 form {
 	display:flex;
@@ -79,6 +82,8 @@ form {
 	box-shadow:inset 0 0 10px #eee;
 	height:20px;
 	width:100%;
+	padding-left:40px;
+	background:#fff no-repeat 14px center url("../assets/search.svg")
 }
 .bookSearch input[type="text"]:focus, .bookSearch select:hover {
 	outline:none;
@@ -107,8 +112,7 @@ form {
 }
 .bookSearch select::-ms-expand { display: none; }
 .bookSearch button {
-	background:var(--blue);
-	
+	background-color:var(--blue);
 	width:auto;
 	height:37px;
 	color:#fff;
@@ -118,7 +122,7 @@ form {
 	border-bottom:1px solid rgba(0,0,0,.3);
 }
 .bookSearch button:hover {
-	background:var(--lighterBlue);
+	background-color:var(--lighterBlue);
 }
 p.message {
 	font-style:italic;
@@ -141,10 +145,10 @@ h2 {
 	color:#bbb;
 }
 .navLink:hover {
-	color:#9f9f9f;
+	color:#888;
 }
 h2 .active {
-	color:#777;
+	color:#444;
 }
 h2 .spacer {
 	padding:0 10px;
@@ -161,19 +165,18 @@ ul {
 	border-bottom:1px dotted #ccc;
 }
 #bookList li .coverImage {
-	width:30px;
-	min-width:30px;
-	height:45px;
+	width:40px;
+	min-width:40px;
 	margin-right:20px;
-	background:#e3e3e3;
+	background:#fff;
 	overflow:hidden;
 	font-size:8pt;
 	color:#999;
 	text-align:center;
+	cursor:pointer;
 }
 #bookList li .coverImage img {
-	height:45px;
-	width:30px;
+	width:40px;
 }
 #bookList li .content {
 	padding:0 20px 0 0;
@@ -181,42 +184,35 @@ ul {
 #bookList li h3 {
 	font-size:13pt;
 	font-weight:bold;
-	padding:3px 0 6px 0;
+	margin:4px 0 3px 0;
+	padding:0 0 3px 0;
+	cursor:pointer;
 }
-#bookList li h3 a {
-	color:#444;
-	text-decoration:none;
-}
-#bookList li h3 a:hover {
-	color:#000;
-	border-bottom:1px dotted #999;
+#bookList li h3:hover {
+	text-decoration:underline;
 }
 #bookList li h4 {
 	font-size:10pt;
 	font-style:italic;
 	color:#aaa;
+	padding:4px 0 0 0;
 }
-#bookList li a.link {
-	border:1px solid #ddd;
-	background:#f3f3f3;
+#bookList li button {
+	border:1px solid var(--evenLighterBlue);
+	background:#fff;
 	border-radius:4px;
-	color:#aaa;
-	text-decoration:none;
-	line-height:24px;
-	height:24px;
+	color:var(--lightestBlue);
+	height:26px;
 	margin:9px 0 0 auto;
 	font-size:9pt;
-	min-width:45px;
-	text-align:center;
-	opacity:1;
+	cursor:pointer;
+	padding:0 8px;
 }
-#bookList li:hover a.link {
-	opacity:1;
+#bookList li button span {
+	padding:0 0 0 4px;
 }
-#bookList  li a.link:hover {
-	color:#555;
-	border-color:#ccc;
-	background:#eee;
+#bookList  li button:hover {
+	border-color:var(--lightestBlue);
 }
 .moreResults {
 	margin: 30px auto;
@@ -239,10 +235,32 @@ ul {
 }
 
 /* Book PAge */
-
+.bookDetails button {
+	font-size:16pt;
+	letter-spacing:-.5px;
+	padding:0;
+	border-bottom:3px solid #ddd;
+	color:#bbb;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background:none;
+	border:0;
+	cursor:pointer;
+}
 .bookInfo {
 	padding:20px 0;
 	display:flex;
+	line-height:22px;
+	font-size:11pt;
+}
+.bookInfo .category {
+	padding:3px 10px;
+	background:#eee;
+	border-radius:100px;
+	border:1px solid #ccc;
+	font-size:9pt;
+	color:#777;
 }
 .bookInfo .coverImage {
 	padding:0 20px 0 0;
@@ -255,4 +273,14 @@ ul {
 	font-style:italic;
 	color:#666;
 	font-size:11pt;
+}
+.bookInfo li {
+	padding:0 0 8px 0;
+}
+.bookInfo ul .caption {
+	color:#000;
+	font-weight:bold;
+}
+.bookInfo ul .value {
+	color:#444;
 }
