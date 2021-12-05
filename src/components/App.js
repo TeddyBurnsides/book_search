@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useReducer, useState } from "react";
-import lodash from "lodash";
 
 //components
 import BookList from './BookList';
@@ -19,7 +18,6 @@ import buildBookObject from '../utils/buildBookObject';
 const App = () => {
 
   const [searchCriteria, setSearchCriteria] = useState({value:undefined, type: undefined});
-  const [prevSearchCriteria, setPrevSearchCriteria] = useState({});
   const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0, openBook:null})
   const [books, bookDispatch] = useReducer(bookReducer,[]); 
 
@@ -28,21 +26,22 @@ const App = () => {
   
     event.preventDefault(); // avoid a page refresh
 
-    if (searchValue === "") return;
+    if (searchValue === "") return; // why even try if there is no search criteria?
 
     // handle new search criteria vs. getting more books for the current search
     if (newSearch) {
       stateDispatch({type:'newSearch'});
-      setSearchCriteria(prevState => ({...prevState, value:searchValue, type: searchType}));    
+      setSearchCriteria(prevState => ({...prevState, value:searchValue, type: searchType}));
+      bookDispatch({type:'clearBookList'});    
     } else {
-      stateDispatch({type:'getMoreResults'});
+      stateDispatch({type:'getMoreResults'});  
     }
-    
+
   }
 
   const showBookDetails = (event, bookId) => {
 
-    event.preventDefault();
+    event.preventDefault(); // prevent page refresh
 
     stateDispatch({
       type: 'showBookDetails',
@@ -52,7 +51,7 @@ const App = () => {
 
   const hideBookDetails = (event) => {
 
-    event.preventDefault();
+    event.preventDefault(); // prevent page refresh
 
     stateDispatch({type: 'hideBookDetails'});
   }
@@ -60,14 +59,6 @@ const App = () => {
 	useEffect(() => {
 
 		if (searchCriteria.value) {
-
-      
-
-      // if search criteria changed, clear page for new results
-			if (!lodash.isEqual(prevSearchCriteria,searchCriteria)) { 
-        bookDispatch({type:'clearBookList'});
-        setPrevSearchCriteria({...searchCriteria})
-			}
 
       stateDispatch({type:'loadingResults'}); // starting loading before async fetch happens
 
