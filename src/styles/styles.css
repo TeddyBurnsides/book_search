@@ -53,6 +53,37 @@ table {
 	--lighterBlue: #176bda;
 	--lightestBlue: #61a1f4;
 	--evenLighterBlue:rgb(155, 194, 245);
+	--inputBorderColor:#ccc;
+	--focusedInputBorderColor:#999;
+	--inputShadowColor:#eee;
+	--background:#fff;
+	--darkerBackground:#eee;
+	--darkestBackground:#ddd;
+	--textColor:#222;
+	--backgroundGradientTop: #fff;
+	--backgroundGradientBottom: #e5e5e5;
+	--buttonTextColor: #fff;
+	--softerText:#888;
+	--midText:#666;
+}
+
+/* Night Mode */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background:#000;
+		--text:#fff;
+		--softerText:#777;
+		--midText: #bbb;
+		--inputBorderColor:#222;
+		--focusedInputBorderColor:#444;
+		--inputShadowColor:#0a0a0a;
+		--backgroundGradientBottom:#000;
+		--backgroundGradientTop:#222;
+		--textColor:#eee;
+		--darkerBackground:#111;
+		--darkestBackground:#222;
+	}
 }
 
 /* App-specific styles */
@@ -64,6 +95,7 @@ body {
 	max-width:700px;
 	margin: 0 auto;
 	position:relative;
+	background:var(--background);
 }
 form {
 	display:flex;
@@ -74,20 +106,21 @@ form {
 }
 .bookSearch input[type="text"], .bookSearch button {
 	border-radius:4px;
-	border:1px solid #ccc;
+	border:1px solid var(--inputBorderColor);
 	padding:8px 14px;
 	font:11pt/1 var(--fontFamily);
 }
 .bookSearch input[type="text"] {
-	box-shadow:inset 0 0 10px #eee;
+	box-shadow:inset 0 0 10px var(--inputShadowColor);
 	height:20px;
 	width:100%;
 	padding-left:40px;
-	background:#fff no-repeat 14px center url("../assets/search.svg")
+	color:var(--textColor);
+	background:var(--background) no-repeat 14px center url("../assets/search.svg")
 }
 .bookSearch input[type="text"]:focus, .bookSearch select:hover {
 	outline:none;
-	border-color:#999;
+	border-color:var(--focusedInputBorderColor);
 }
 .bookSearch select:focus {
 	outline:none;
@@ -97,15 +130,15 @@ form {
 	padding:0 30px 0 10px;
 	cursor:pointer;
 	display: block;
-	color: #444;
+	color: var(--midText);
 	font-size:10pt;
 	box-sizing: border-box;
-	border: 1px solid #bbb;
+	border: 1px solid var(--inputBorderColor);
 	border-radius: 4px;
 	appearance: none;
-	background-color: #fff;
+	background-color: var(--background);
 	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-	  linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+	  linear-gradient(to bottom, var(--backgroundGradientTop) 0%,var(--backgroundGradientBottom) 100%);
 	background-repeat: no-repeat, repeat;
 	background-position: right .7em top 50%, 0 0;
 	background-size: .65em auto, 100%;
@@ -114,19 +147,18 @@ form {
 .bookSearch button {
 	background-color:var(--blue);
 	width:auto;
-	height:37px;
-	color:#fff;
+	height:38px;
+	color:var(--buttonTextColor);
 	margin:0 0 0 10px;
 	border:0;
 	cursor:pointer;
-	border-bottom:1px solid rgba(0,0,0,.3);
 }
 .bookSearch button:hover {
 	background-color:var(--lighterBlue);
 }
 p.message {
 	font-style:italic;
-	color:#888;
+	color:var(--softerText);
 	text-align:Center;
 	padding:50px 0;
 }
@@ -134,21 +166,17 @@ h2 {
 	font-size:16pt;
 	letter-spacing:-.5px;
 	padding:30px 0px 10px;
-	border-bottom:3px solid #ddd;
-	color:#bbb;
+	border-bottom:3px solid var(--inputBorderColor);
+	color:var(--midText);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.navLink {
-	text-decoration:none;
-	color:#bbb;
-}
 .navLink:hover {
-	color:#888;
+	color:var(--midText);
 }
 h2 .active {
-	color:#444;
+	color:var(--textColor);
 }
 h2 .spacer {
 	padding:0 10px;
@@ -162,16 +190,16 @@ ul {
 	padding: 20px 0px;
 	display:flex;
 	min-height:40px;	
-	border-bottom:1px dotted #ccc;
+	border-bottom:1px dotted var(--inputBorderColor);
 }
 #bookList li .coverImage {
 	width:40px;
 	min-width:40px;
 	margin-right:20px;
-	background:#fff;
+	background:var(--background);
 	overflow:hidden;
 	font-size:8pt;
-	color:#999;
+	color:var(--softerText);
 	text-align:center;
 	cursor:pointer;
 }
@@ -187,6 +215,7 @@ ul {
 	margin:4px 0 3px 0;
 	padding:0 0 3px 0;
 	cursor:pointer;
+	color:var(--textColor);
 }
 #bookList li h3:hover {
 	text-decoration:underline;
@@ -194,12 +223,12 @@ ul {
 #bookList li h4 {
 	font-size:10pt;
 	font-style:italic;
-	color:#aaa;
+	color:var(--softerText);
 	padding:4px 0 0 0;
 }
 #bookList li button {
 	border:1px solid var(--evenLighterBlue);
-	background:#fff;
+	background:var(--background);
 	border-radius:4px;
 	color:var(--lightestBlue);
 	height:26px;
@@ -217,18 +246,18 @@ ul {
 .moreResults {
 	margin: 30px auto;
 	width: 100px;
-	background: #eee;
+	background:var(--darkerBackground);
 	text-align: center;
 	padding: 10px 0;
 	border-radius: 4px;
-	color: #777;
-	border:1px solid #ddd;
+	color: var(--softerText);
+	border:1px solid var(--inputBorderColor);
 	cursor:pointer;
 }
 .moreResults:hover {
-	background:#e3e3e3;
-	color:#555;
-	border-color:#ccc;
+	background:var(--darkestBackground);
+	color:var(--midText);
+	border-color:var(--focusedInputBorderColor);
 }
 .moreResults.disabled { /* applied when in loading state */
 	pointer-events:none;
@@ -239,8 +268,7 @@ ul {
 	font-size:16pt;
 	letter-spacing:-.5px;
 	padding:0;
-	border-bottom:3px solid #ddd;
-	color:#bbb;
+	color:var(--softerText);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -256,11 +284,11 @@ ul {
 }
 .bookInfo .category {
 	padding:3px 10px;
-	background:#eee;
+	background:var(--darkerBackground);
 	border-radius:100px;
-	border:1px solid #ccc;
+	border:1px solid var(--inputBorderColor);
 	font-size:9pt;
-	color:#777;
+	color:var(--midText);
 }
 .bookInfo .coverImage {
 	padding:0 20px 0 0;
@@ -271,16 +299,16 @@ ul {
 }
 .bookInfo h4 {
 	font-style:italic;
-	color:#666;
+	color:var(--softerText);
 	font-size:11pt;
 }
 .bookInfo li {
 	padding:0 0 8px 0;
 }
 .bookInfo ul .caption {
-	color:#000;
+	color:var(--text);
 	font-weight:bold;
 }
 .bookInfo ul .value {
-	color:#444;
+	color:var(--midText);
 }
