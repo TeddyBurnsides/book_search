@@ -47,7 +47,7 @@ table {
 
 /* Variables */
 
-:root {
+body {
 	--fontFamily: 'Helvetica Neue',Helvetica, Arial, sans-serif;
 	--blue: #1666ce;
 	--lighterBlue: #176bda;
@@ -67,26 +67,21 @@ table {
 	--midText:#666;
 }
 
-/* Night Mode */
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background:#000;
-		--text:#fff;
-		--softerText:#777;
-		--midText: #bbb;
-		--inputBorderColor:#222;
-		--focusedInputBorderColor:#444;
-		--inputShadowColor:#0a0a0a;
-		--backgroundGradientBottom:#000;
-		--backgroundGradientTop:#222;
-		--textColor:#eee;
-		--darkerBackground:#111;
-		--darkestBackground:#222;
-	}
+body.darkTheme {
+	--background:#000;
+	--text:#fff;
+	--softerText:#777;
+	--midText: #bbb;
+	--inputBorderColor:#222;
+	--focusedInputBorderColor:#444;
+	--inputShadowColor:#0a0a0a;
+	--backgroundGradientBottom:#000;
+	--backgroundGradientTop:#222;
+	--textColor:#eee;
+	--darkerBackground:#111;
+	--darkestBackground:#222;
 }
 
-/* App-specific styles */
 
 body {
 	padding:20px;
@@ -94,8 +89,25 @@ body {
 	min-width:330px;
 	max-width:700px;
 	margin: 0 auto;
-	position:relative;
 	background:var(--background);
+}
+#darkModeButton {
+	position:fixed;
+	top:10px;
+	right:10px;
+	width:30px;
+	height:30px;
+	background:transparent no-repeat center center url("../assets/moon.svg");
+	background-size: 20px 20px;
+	border:0;
+	cursor:pointer;
+	opacity:.3;
+}
+#darkModeButton:hover {
+	opacity:1;
+}
+.darkTheme #darkModeButton {
+	background-image:url("../assets/sun.svg");
 }
 form {
 	display:flex;

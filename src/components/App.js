@@ -19,7 +19,7 @@ const App = () => {
 
   const [searchCriteria, setSearchCriteria] = useState({value:undefined, type: undefined});
   const [state, stateDispatch] = useReducer(stateReducer,{error:false, loading: false, hasInitSearch: false, page:0, openBook:null})
-  const [books, bookDispatch] = useReducer(bookReducer,[]); 
+  const [books, bookDispatch] = useReducer(bookReducer,[]);
 
   // search input handler
   const getBooks = (event,newSearch,searchValue,searchType) => {
@@ -56,6 +56,12 @@ const App = () => {
     stateDispatch({type: 'hideBookDetails'});
   }
 
+  const toggleDarkMode = () => {
+
+    document.body.classList.toggle('darkTheme');
+
+  }
+
 	useEffect(() => {
 
 		if (searchCriteria.value) {
@@ -86,6 +92,7 @@ const App = () => {
 
   return (
     <>
+      <button id="darkModeButton" onClick={toggleDarkMode}></button>
       <SearchForm state={state} getBooks={getBooks} />
       <div className="bookList">
         {state.openBook === null && <BookList
