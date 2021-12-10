@@ -12,7 +12,7 @@ const SearchForm = (props) => {
 
 		<form className={formClass}>
 			<input 
-				type="text" 
+				type="search" 
 				value={searchValue}
 				placeholder="Search books..."
 				onChange={event => setSearchValue(event.target.value)}
